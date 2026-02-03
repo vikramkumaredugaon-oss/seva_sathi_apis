@@ -73,6 +73,38 @@ app.post("/register_user", upload.single("image"), async (req, res) => {
   }
 });
 
+app.get("/get_register/:id", (req, res) => {
+  const { id } = req.params;
+
+  const query =
+    "SELECT * FROM users WHERE id=?";
+
+  db.query(query, [id], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({
+        status: false,
+        message: "Database error",
+      });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({
+        status: false,
+        message: "User not found",
+      });
+    }
+
+    return res.json({
+      status: true,
+      message: "User fetched successfully",
+      data: results[0],
+    });
+  });
+});
+
+
+
 app.post("/login", (req, res) => {
   console.log("LOGIN BODY =>", req.body);
 
