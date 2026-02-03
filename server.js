@@ -6,8 +6,7 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 const db = require("./db");
-const { client, service_id}=require('./twilioConfig');
-const { Message } = require('twilio/lib/twiml/MessagingResponse');
+const { client } = require("./twilioConfig");
 
 const app = express();
 
@@ -160,7 +159,7 @@ app.post("/send-otp", async (req, res) => {
     }
 
     const result = await client.verify.v2
-      .services(service_id)
+      .services(process.env.TWILIO_SERVICE_ID)
       .verifications.create({
         to: phone,
         channel: "sms",
@@ -198,7 +197,7 @@ app.post("/verify-otp", async (req, res) => {
     console.log("VERIFY OTP FOR:", formattedPhone);
 
     const verify = await client.verify.v2
-      .services(service_id)
+      .services(process.env.TWILIO_SERVICE_ID)
       .verificationChecks.create({
         to: formattedPhone,
         code: otp,

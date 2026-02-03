@@ -1,20 +1,5 @@
-// const mysql = require("mysql2");
-// const db = mysql.createConnection({ host: "217.21.87.103", database: "u205680228_sevasathi", user: "u205680228_seva_sathi", password: "Seva@sathi2026" });
-// db.connect((error) => {
-//     if (error) {
-//         console.log("Database Connection Error:-" + error);
-//     }
-//     else {
-//         console.log("Database Connected");
-//     }
-// })
-// module.exports = db;
-
-
 const mysql = require("mysql2");
 
-
-// ✅ CONNECTION POOL
 const db = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USERNAME,
@@ -30,7 +15,7 @@ db.getConnection((err, connection) => {
     console.error("❌ DB Pool Error:", err);
   } else {
     console.log("✅ Database Pool Connected");
-    connection.release(); // VERY IMPORTANT
+    connection.release(); 
   }
 });
 
